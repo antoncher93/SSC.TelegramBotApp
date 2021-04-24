@@ -15,7 +15,7 @@ namespace SSC.TelegramBotApp.Controllers
 
         public string About()
         {
-            return "SSC Bot Version 1.0";
+            return "SSC Bot Version 1.10";
         }
 
         

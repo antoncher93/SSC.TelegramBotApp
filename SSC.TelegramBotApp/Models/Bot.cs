@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 using Telegram.Bot;
+using Telegram.Bot.Types.Enums;
 
 namespace SSC.TelegramBotApp.Models
 {
@@ -25,7 +26,6 @@ namespace SSC.TelegramBotApp.Models
                 _commands.Add(new HowDoYouCommand());
 
                 var hook = string.Format(AppSettings.Url, "api/message/update");
-
                 await _client.SetWebhookAsync(hook);
 
                 //var offset = 0;

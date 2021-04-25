@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web;
 using Telegram.Bot;
 using Telegram.Bot.Types;
@@ -15,6 +16,12 @@ namespace SSC.TelegramBotApp.Commands
         {
             var chatId = msg.Chat.Id;
             await client.SendTextMessageAsync(chatId, "У бота все отлично:)");
+        }
+
+        public override Task ExecuteAsync(TelegramBotClient client, Message msg)
+        {
+            var chatId = msg.Chat.Id;
+            return client.SendTextMessageAsync(chatId, "У бота все отлично:)");
         }
     }
 }

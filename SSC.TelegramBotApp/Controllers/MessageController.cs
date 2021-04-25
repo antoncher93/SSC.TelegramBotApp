@@ -21,11 +21,11 @@ namespace SSC.TelegramBotApp.Controllers
             var message = update.Message;
             var client = await Bot.Get();
 
-            foreach(var command in commands)
+            foreach (var command in commands)
             {
                 if (command.Contains(message.Text))
                 {
-                    command.Execute(client, message);
+                    await command.ExecuteAsync(client, message);
                     break;
                 }
             }

@@ -10,12 +10,12 @@ namespace SSC.TelegramBotApp.Controllers
     {
         public string Index()
         {
-            return "This is my first f*cking telegram bot!";
+            return "This is SSC Telegram Bot!";
         }
 
         public string About()
         {
-            return "SSC Bot Version 1.10";
+            return "SSC Bot Version 1.12";
         }
 
         

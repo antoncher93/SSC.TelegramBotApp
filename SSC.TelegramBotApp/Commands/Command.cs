@@ -5,6 +5,7 @@ using System.Linq;
 using System.Web;
 using Telegram.Bot;
 using Telegram.Bot.Types;
+using System.Threading.Tasks;
 
 namespace SSC.TelegramBotApp.Commands
 {
@@ -12,6 +13,7 @@ namespace SSC.TelegramBotApp.Commands
     {
         public abstract string Name { get; }
         public abstract void Execute(TelegramBotClient client, Message msg);
+        public abstract Task ExecuteAsync(TelegramBotClient client, Message msg);
         public bool Contains(string command)
         {
             return command.Contains(Name);

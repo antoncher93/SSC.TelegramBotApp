@@ -23,7 +23,7 @@ namespace SSC.TelegramBotApp.Controllers
 
             foreach (var command in commands)
             {
-                if (command.Contains(message.Text))
+                if (command.Contains(message?.Text))
                 {
                     await command.ExecuteAsync(client, message);
                     break;

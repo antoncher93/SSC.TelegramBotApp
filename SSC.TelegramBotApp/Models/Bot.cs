@@ -24,6 +24,7 @@ namespace SSC.TelegramBotApp.Models
                 _client = new TelegramBotClient(AppSettings.Key);
                 _commands.Add(new HelloCommand());
                 _commands.Add(new HowDoYouCommand());
+                _commands.Add(new KickUserFromChatComman());
 
                 var hook = string.Format(AppSettings.Url, "api/message/update");
                 await _client.SetWebhookAsync(hook);

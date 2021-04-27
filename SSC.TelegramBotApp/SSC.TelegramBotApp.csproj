@@ -135,6 +135,7 @@
     <Compile Include="Commands\HelloCommand.cs" />
     <Compile Include="Commands\HowDoYouCommand.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Commands\KickUserFromChatComman.cs" />
     <Compile Include="Controllers\MessageController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>

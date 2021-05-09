@@ -8,7 +8,7 @@ namespace SSC.TelegramBotApp.Models
     public static class AppSettings
     {
 #if DEBUG
-        public static string Url { get; set; } = @"https://cfe108467b32.ngrok.io/{0}";
+        public static string Url { get; set; } = @"https://95fdbd215693.ngrok.io/{0}";
 #else
         public static string Url { get; set; } = @"https://ssctelegrambot.azurewebsites.net/{0}";
 #endif

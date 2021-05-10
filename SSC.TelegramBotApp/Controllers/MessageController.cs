@@ -17,21 +17,8 @@ namespace SSC.TelegramBotApp.Controllers
         [Route(@"api/message/update")]
         public async Task<OkResult> Update([FromBody]Update update)
         {
-            var commands = Bot.CommandList;
-            var message = update.Message;
             var client = await Bot.Get();
-
-            //foreach (var command in commands)
-            //{
-            //    if (command.Contains(message?.Text))
-            //    {
-            //        await command.ExecuteAsync(client, message);
-            //        break;
-            //    }
-            //}
-
-            Bot.HandleMessage(client, message);
-
+            Bot.HandleUpdate(client, update);
             return Ok();
         }
 

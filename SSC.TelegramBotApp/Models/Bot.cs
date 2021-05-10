@@ -19,12 +19,11 @@ namespace SSC.TelegramBotApp.Models
 
         private static BaseHandler _rootHandler;
 
-        public static void HandleMessage(TelegramBotClient client, Message msg)
+        public static void HandleUpdate(TelegramBotClient client, Update update)
         {
-            _rootHandler?.Handle(client, msg);
+            if(update.Message != null)
+                _rootHandler?.Handle(client, update.Message);
         }
-
-        public static IReadOnlyList<Command> CommandList => _commands.AsReadOnly();
 
         public static async Task<TelegramBotClient> Get()
         {
@@ -33,11 +32,6 @@ namespace SSC.TelegramBotApp.Models
                 _client = new TelegramBotClient(AppSettings.Key);
 
                 _ConfigureHandlers();
-
-                //_commands.Add(new HelloCommand());
-                //_commands.Add(new HowDoYouCommand());
-                //_commands.Add(new KickUserFromChatComman());
-                //_commands.Add(new WarnUserCommand());
 
                 var hook = string.Format(AppSettings.Url, "api/message/update");
                 await _client.SetWebhookAsync(hook);
@@ -49,7 +43,11 @@ namespace SSC.TelegramBotApp.Models
         private static void _ConfigureHandlers()
         {
             _rootHandler = new TestHandler();
-            _rootHandler.SetNext(new WarnMessageHandler());
+            _rootHandler.SetNext(new WarnMessageHandler())
+                .SetNext(new WarnUserHandler())
+                .SetNext(new WelcomeNewChatMemberHandler())
+                .SetNext(new UpdateMemberAgreementHandler())
+                .SetNext(new RestrictUserHandler());
         }
     }
 }

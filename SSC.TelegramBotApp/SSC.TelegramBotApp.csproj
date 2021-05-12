@@ -151,6 +151,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Commands\KickUserFromChatComman.cs" />
     <Compile Include="Controllers\MessageController.cs" />
+    <Compile Include="Extensions\BotDbContextExtension.cs" />
     <Compile Include="Extensions\UserExtensions.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -171,6 +172,7 @@
     <Compile Include="Models\AppSettings.cs" />
     <Compile Include="Models\Bot.cs" />
     <Compile Include="Models\BotDbContext.cs" />
+    <Compile Include="Models\Member.cs" />
     <Compile Include="Models\UserInfo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

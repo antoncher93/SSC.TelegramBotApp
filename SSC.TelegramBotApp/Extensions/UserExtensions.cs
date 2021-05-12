@@ -32,7 +32,7 @@ namespace SSC.TelegramBotApp.Extensions
             client.RestrictChatMemberAsync(chatId, user.Id, permissions);
         }
 
-        public static void BanInChat(this User user, TelegramBotClient client, long chatId, int replyMessageId = 0, DateTime untilDate = default)
+        public static void BanInChat(this User user, TelegramBotClient client, long chatId, int replyMessageId = 0)
         {
             var permissions = new ChatPermissions()
             {
@@ -46,11 +46,16 @@ namespace SSC.TelegramBotApp.Extensions
                 //CanSendPolls = true
             };
 
-            client.RestrictChatMemberAsync(chatId, user.Id, permissions, untilDate);
+            client.RestrictChatMemberAsync(chatId, user.Id, permissions, DateTime.UtcNow + TimeSpan.FromDays(3));
 
             if(replyMessageId > 0)
                 client.SendTextMessageAsync(chatId, $"{user.GetMension()} будет забанен!", 
                     replyToMessageId: replyMessageId, parseMode: Telegram.Bot.Types.Enums.ParseMode.Markdown);
+
+            var member = BotDbContext.Get().GetMember(chatId, user.Id);
+            member.Warns = 0;
+            BotDbContext.Get().Entry(member).State = System.Data.Entity.EntityState.Modified;
+            BotDbContext.Get().SaveChanges();
         }
 
         public static void Warn(this User member, TelegramBotClient client, long chatId, long msgId)

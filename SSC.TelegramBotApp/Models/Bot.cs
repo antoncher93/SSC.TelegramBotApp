@@ -67,7 +67,7 @@ namespace SSC.TelegramBotApp.Models
             _rootMessageHandler
                 .SetNext(new TestMessageHandler())
                 .SetNext(new WarnMessageHandler())
-                .SetNext(new WarnUserMessageHandler())
+                //.SetNext(new WarnUserMessageHandler())
                 .SetNext(new BanUserMessageHandler())
                 .SetNext(new UnbanMemberMessageHandler())
                 .SetNext(new WelcomeNewChatMemberMessageHandler())

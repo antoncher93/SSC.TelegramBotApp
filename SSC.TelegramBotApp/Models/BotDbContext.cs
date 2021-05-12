@@ -20,6 +20,8 @@ namespace SSC.TelegramBotApp.Models
         public DbSet<UserInfo> UserInfoes { get => userInfos; 
             set => userInfos = value; }
 
+        public DbSet<Member> Members { get; set; }
+
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             Database.SetInitializer<BotDbContext>(null);

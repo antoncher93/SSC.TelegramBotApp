@@ -9,11 +9,11 @@ using Telegram.Bot.Types;
 
 namespace SSC.TelegramBotApp.Handlers
 {
-    public class UpdateMemberAgreementHandler : BaseHandler
+    public class UpdateChatAgreementMessageHandler : MessageHandler
     {
         public override void Handle(TelegramBotClient client, Message msg)
         {
-            if(msg.Text != null && msg.Text.IndexOf("!agreement\n", StringComparison.OrdinalIgnoreCase)>= 0)
+            if(msg != null && msg.Text != null && msg.Text.IndexOf("!agreement\n", StringComparison.OrdinalIgnoreCase)>= 0)
             {
                 var agreement = msg.Text.Replace("!agreement\n", "");
                 Configuration objConfig = WebConfigurationManager.OpenWebConfiguration("~");

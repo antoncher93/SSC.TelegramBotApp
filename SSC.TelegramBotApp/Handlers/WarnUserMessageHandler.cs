@@ -8,11 +8,11 @@ using Telegram.Bot.Types;
 
 namespace SSC.TelegramBotApp.Handlers
 {
-    public class WarnUserHandler : BaseHandler
+    public class WarnUserMessageHandler : MessageHandler
     {
         public override void Handle(TelegramBotClient client, Message msg)
         {
-            if(msg.Text != null && msg.Text.IndexOf("!Warn", StringComparison.OrdinalIgnoreCase) >=0)
+            if(msg != null && msg.Text != null && msg.Text.IndexOf("!Warn", StringComparison.OrdinalIgnoreCase) >=0)
             {
                 if(msg.Entities != null)
                 {

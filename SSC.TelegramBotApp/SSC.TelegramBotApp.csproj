@@ -155,13 +155,19 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Handlers\BaseHandler.cs" />
-    <Compile Include="Handlers\RestrictUserHandler.cs" />
-    <Compile Include="Handlers\TestHandler.cs" />
-    <Compile Include="Handlers\UpdateMemberAgreementHandler.cs" />
+    <Compile Include="Handlers\AdminMessageHandler.cs" />
+    <Compile Include="Handlers\AgreementAcceptUpdateHandler.cs" />
+    <Compile Include="Handlers\MemberUnbannedUpdateHandler.cs" />
+    <Compile Include="Handlers\MessageHandler.cs" />
+    <Compile Include="Handlers\UnbanMemberMessageHandler.cs" />
+    <Compile Include="Handlers\UpdateHandler.cs" />
+    <Compile Include="Handlers\BanUserMessageHandler.cs" />
+    <Compile Include="Handlers\ChatMemberBannedHandler.cs" />
+    <Compile Include="Handlers\TestMessageHandler.cs" />
+    <Compile Include="Handlers\UpdateChatAgreementMessageHandler.cs" />
     <Compile Include="Handlers\WarnMessageHandler.cs" />
-    <Compile Include="Handlers\WarnUserHandler.cs" />
-    <Compile Include="Handlers\WelcomeNewChatMemberHandler.cs" />
+    <Compile Include="Handlers\WarnUserMessageHandler.cs" />
+    <Compile Include="Handlers\WelcomeNewChatMemberMessageHandler.cs" />
     <Compile Include="Models\AppSettings.cs" />
     <Compile Include="Models\Bot.cs" />
     <Compile Include="Models\BotDbContext.cs" />

@@ -7,14 +7,14 @@ using Telegram.Bot.Types;
 
 namespace SSC.TelegramBotApp.Handlers
 {
-    public class BaseHandler
+    public abstract class MessageHandler
     {
-        private BaseHandler _next;
+        private MessageHandler _next;
 
-        public BaseHandler SetNext(BaseHandler handler)
+        public MessageHandler SetNext(MessageHandler messageHandler)
         {
-            _next = handler;
-            return handler;
+            _next = messageHandler;
+            return messageHandler;
         }
 
         public virtual void Handle(TelegramBotClient client, Message msg)

@@ -7,11 +7,11 @@ using Telegram.Bot.Types;
 
 namespace SSC.TelegramBotApp.Handlers
 {
-    public class TestHandler : BaseHandler
+    public class TestMessageHandler : MessageHandler
     {
         public override void Handle(TelegramBotClient client, Message msg)
         {
-            if (msg != null && msg.Text != null 
+            if (msg != null && msg != null && msg.Text != null 
                 && msg.Text.IndexOf("!Test", StringComparison.OrdinalIgnoreCase) >= 0)
             {
                 var chatId = msg.Chat.Id;

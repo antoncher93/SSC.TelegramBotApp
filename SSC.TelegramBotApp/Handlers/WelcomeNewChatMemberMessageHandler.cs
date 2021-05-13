@@ -19,14 +19,16 @@ namespace SSC.TelegramBotApp.Handlers
             {
                 var mentions = "";
                 bool first = true;
-                foreach(var member in msg.NewChatMembers)
+                foreach (var user in msg.NewChatMembers)
                 {
-                    mentions += "[" + member.FirstName + "](tg://user?id=" + member.Id + ")";
+                    mentions += "[" + user.FirstName + "](tg://user?id=" + user.Id + ")";
                     if (!first)
                         mentions += ", ";
                     else first = false;
 
-                    member.BanInChat(client, msg.Chat.Id);
+                    user.BanInChat(client, msg.Chat.Id);
+
+                    BotDbContext.Get().GetUserInfo(user); // добавить информацию о юзере в базу
                 }
 
                 var button = new InlineKeyboardButton();
@@ -34,16 +36,6 @@ namespace SSC.TelegramBotApp.Handlers
                 button.CallbackData = Bot.ACCEPT_AGREEMENT_CALLBACK;
 
                 var keyboard = new InlineKeyboardMarkup(button);
-
-                //client.OnCallbackQuery += (object sc, Telegram.Bot.Args.CallbackQueryEventArgs ev) =>
-                //{
-                //    if (ev.CallbackQuery.Data.Equals("accept_agreement_calback"))
-                //    {
-                //        var user = ev.CallbackQuery.From;
-                //        user.Unban(client, msg.Chat.Id);
-                //    }
-                //};
-
                 string agreement = WebConfigurationManager.AppSettings.Get("MemberAgreement");
                 client.SendTextMessageAsync(msg.Chat.Id, $"{mentions}\n{agreement}", 
                     parseMode: Telegram.Bot.Types.Enums.ParseMode.Markdown, 

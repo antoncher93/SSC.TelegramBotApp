@@ -18,14 +18,14 @@ namespace SSC.TelegramBotApp.Handlers
                 {
                     foreach(var entity in msg.Entities)
                     {
-                        entity.User.BanInChat(client, msg.Chat.Id, msg.MessageId);
+                        entity.User.BanInChat(client, msg.Chat.Id, msg.MessageId, DateTime.UtcNow + TimeSpan.FromDays(3));
                         //entity.User.BanInChat(client, msg.Chat.Id, msg.MessageId, DateTime.UtcNow + TimeSpan.FromSeconds(35));
                     }
                 }
                 else if(msg.ReplyToMessage != null)
                 {
                     msg.ReplyToMessage.From
-                        .BanInChat(client, msg.Chat.Id, msg.MessageId);
+                        .BanInChat(client, msg.Chat.Id, msg.MessageId, DateTime.UtcNow + TimeSpan.FromDays(3));
                 }
             }
             else base.Handle(client, msg);

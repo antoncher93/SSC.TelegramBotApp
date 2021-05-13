@@ -144,12 +144,7 @@
   <ItemGroup>
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
-    <Compile Include="Commands\Command.cs" />
-    <Compile Include="Commands\HelloCommand.cs" />
-    <Compile Include="Commands\HowDoYouCommand.cs" />
-    <Compile Include="Commands\WarnUserCommand.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Commands\KickUserFromChatComman.cs" />
     <Compile Include="Controllers\MessageController.cs" />
     <Compile Include="Extensions\BotDbContextExtension.cs" />
     <Compile Include="Extensions\UserExtensions.cs" />
@@ -167,7 +162,6 @@
     <Compile Include="Handlers\TestMessageHandler.cs" />
     <Compile Include="Handlers\UpdateChatAgreementMessageHandler.cs" />
     <Compile Include="Handlers\WarnMessageHandler.cs" />
-    <Compile Include="Handlers\WarnUserMessageHandler.cs" />
     <Compile Include="Handlers\WelcomeNewChatMemberMessageHandler.cs" />
     <Compile Include="Models\AppSettings.cs" />
     <Compile Include="Models\Bot.cs" />

@@ -23,10 +23,24 @@ namespace SSC.TelegramBotApp.Handlers
                 }
                 else if (msg.Entities != null)
                 {
+                    int index = 0;
                     foreach (var entity in msg.Entities)
                     {
                         var user = entity.User;
-                        _WarnUser(client, msg, user, msg.MessageId);
+                        if (user != null)
+                            _WarnUser(client, msg, user, msg.MessageId);
+                        else
+                        {
+                            var username = msg.EntityValues.ElementAt(index).Replace("@", "");
+                            var userInfo = BotDbContext.Get().UserInfoes.FirstOrDefault(u => u.Username.Equals(username));
+                            if (userInfo != null)
+                            {
+                                var chatMember = client.GetChatMemberAsync(msg.Chat.Id, userInfo.TelegramId).Result;
+                                user = chatMember.User;
+                                _WarnUser(client, msg, user, msg.MessageId);
+                            }
+                        }
+                        index++;
                     }
                 }
 
@@ -40,11 +54,11 @@ namespace SSC.TelegramBotApp.Handlers
             member.Warns++;
             if (member.Warns >= 3)
             {
-                user.BanInChat(client, msg.Chat.Id, msg.MessageId);
+                user.BanInChat(client, msg.Chat.Id, msg.MessageId, DateTime.UtcNow + TimeSpan.FromDays(3));
             }
             else
             {
-                var text = $"{user.GetMension()} предупреждение №{member.Warns}!" +
+                var text = $"{user.GetMension()} предупреждение №{member.Warns}!\n" +
                     $"Бан при получении 3-х предупреждений!";
                 client.SendTextMessageAsync(msg.Chat.Id, text, Telegram.Bot.Types.Enums.ParseMode.Markdown, replyToMessageId: replyMessageId);
                 BotDbContext.Get().Entry(member).State = System.Data.Entity.EntityState.Modified;

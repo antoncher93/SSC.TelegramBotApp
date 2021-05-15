@@ -10,12 +10,18 @@ namespace SSC.TelegramBotApp.Controllers
     {
         public string Index()
         {
-            return "This is SSC Telegram Bot!";
+            return "This is SSC Telegram Bot (Betta)!";
         }
 
         public string About()
         {
-            return "SSC Bot Version 1.12";
+            var status = "Unknown";
+#if DEBUG
+            status = "Debug";
+#else
+            status = "release";
+#endif
+            return $"SSC Bot Version 1.15. Status: {status}";
         }
 
         

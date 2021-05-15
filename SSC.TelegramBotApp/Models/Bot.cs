@@ -22,9 +22,17 @@ namespace SSC.TelegramBotApp.Models
 
         public static void HandleUpdate(TelegramBotClient client, Update update)
         {
-            if (update.Type == UpdateType.Message && update.Message != null)
-                _rootMessageHandler?.Handle(client, update.Message);
-            else _rootUpdateHandler?.Handle(client, update);
+            try
+            {
+                if (update.Type == UpdateType.Message && update.Message != null)
+                    _rootMessageHandler?.Handle(client, update.Message);
+                else _rootUpdateHandler?.Handle(client, update);
+            }
+            catch
+            {
+
+            }
+            
         }
 
         public static void HandleUpdateAsync(TelegramBotClient client, Update update)

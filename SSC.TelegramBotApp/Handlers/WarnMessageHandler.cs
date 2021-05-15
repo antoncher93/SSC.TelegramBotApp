@@ -13,7 +13,7 @@ namespace SSC.TelegramBotApp.Handlers
     {
         public override void Handle(TelegramBotClient client, Message msg)
         {
-            if (msg != null && msg.Text != null && msg.Text.IndexOf("!warn", StringComparison.OrdinalIgnoreCase) >= 0)
+            if (msg != null && msg.Text != null && msg.Text.IndexOf("/warn", StringComparison.OrdinalIgnoreCase) >= 0)
             {
                 if (msg.ReplyToMessage != null)
                 {

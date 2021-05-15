@@ -11,7 +11,6 @@ namespace SSC.TelegramBotApp.Models
         public long TelegramId { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
-        public int Warns { get; set; }
-        public bool IsBanned { get; set; }
+        public string Username { get; set; }
     }
 }

@@ -19,14 +19,16 @@ namespace SSC.TelegramBotApp.Handlers
             {
                 var mentions = "";
                 bool first = true;
-                foreach(var member in msg.NewChatMembers)
+                foreach (var user in msg.NewChatMembers)
                 {
-                    mentions += "[" + member.FirstName + "](tg://user?id=" + member.Id + ")";
+                    mentions += "[" + user.FirstName + "](tg://user?id=" + user.Id + ")";
                     if (!first)
                         mentions += ", ";
                     else first = false;
 
-                    member.BanInChat(client, msg.Chat.Id);
+                    user.BanInChat(client, msg.Chat.Id);
+
+                    BotDbContext.Get().GetUserInfo(user); // добавить информацию о юзере в базу
                 }
 
                 var button = new InlineKeyboardButton();
@@ -34,20 +36,55 @@ namespace SSC.TelegramBotApp.Handlers
                 button.CallbackData = Bot.ACCEPT_AGREEMENT_CALLBACK;
 
                 var keyboard = new InlineKeyboardMarkup(button);
-
-                //client.OnCallbackQuery += (object sc, Telegram.Bot.Args.CallbackQueryEventArgs ev) =>
-                //{
-                //    if (ev.CallbackQuery.Data.Equals("accept_agreement_calback"))
-                //    {
-                //        var user = ev.CallbackQuery.From;
-                //        user.Unban(client, msg.Chat.Id);
-                //    }
-                //};
-
                 string agreement = WebConfigurationManager.AppSettings.Get("MemberAgreement");
                 client.SendTextMessageAsync(msg.Chat.Id, $"{mentions}\n{agreement}", 
                     parseMode: Telegram.Bot.Types.Enums.ParseMode.Markdown, 
                     replyMarkup: keyboard);
+            }
+            else if(msg != null && msg.Text.IndexOf("/welcome")>=0)
+            {
+                if(msg.Entities is null)
+                {
+                    client.SendTextMessageAsync(msg.Chat.Id, "Для выполнения команды необходимо указать пользователей чата.", replyToMessageId: msg.MessageId);
+                }
+                else
+                {
+                    var mentions = "";
+
+                    for (int i = 1; i < msg.Entities.Length; i++)
+                    {
+                        var user = msg.Entities[i].User;
+                        if(user == null)
+                        {
+                            var username = msg.EntityValues.ElementAt(i).Replace("@", "");
+                            var userInfo = BotDbContext.Get().UserInfoes.FirstOrDefault(u => u.Username.Equals(username));
+                            if (userInfo != null)
+                            {
+                                var chatMember = client.GetChatMemberAsync(msg.Chat.Id, userInfo.TelegramId).Result;
+                                user = chatMember.User;
+                            }
+                        }
+
+                        if (i> 0)
+                            mentions += ", ";
+                        mentions += "[" + user.FirstName + "](tg://user?id=" + user.Id + ")";
+
+                        user.BanInChat(client, msg.Chat.Id);
+
+                        BotDbContext.Get().GetUserInfo(user); // добавить информацию о юзере в базу
+                    }
+
+                    var button = new InlineKeyboardButton();
+                    button.Text = "Принять";
+                    button.CallbackData = Bot.ACCEPT_AGREEMENT_CALLBACK;
+
+                    var keyboard = new InlineKeyboardMarkup(button);
+                    string agreement = WebConfigurationManager.AppSettings.Get("MemberAgreement");
+                    client.SendTextMessageAsync(msg.Chat.Id, $"{mentions}\n{agreement}",
+                        parseMode: Telegram.Bot.Types.Enums.ParseMode.Markdown,
+                        replyMarkup: keyboard);
+                }
+               
             }
 
             base.Handle(client, msg);

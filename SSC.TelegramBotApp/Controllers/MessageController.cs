@@ -25,7 +25,7 @@ namespace SSC.TelegramBotApp.Controllers
 
 
             var client = await Bot.Get();
-            Bot.HandleUpdate(client, update);
+            Bot.HandleUpdateAsync(client, update);
             return Ok();
         }
 

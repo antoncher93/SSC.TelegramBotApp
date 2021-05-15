@@ -1,5 +1,4 @@
-﻿using SSC.TelegramBotApp.Commands;
-using SSC.TelegramBotApp.Handlers;
+﻿using SSC.TelegramBotApp.Handlers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,16 +17,27 @@ namespace SSC.TelegramBotApp.Models
 
         private static TelegramBotClient _client;
 
-        private static List<Command> _commands = new List<Command>();
-
         private static UpdateHandler _rootUpdateHandler;
         private static MessageHandler _rootMessageHandler;
 
         public static void HandleUpdate(TelegramBotClient client, Update update)
         {
-            if (update.Type == UpdateType.Message && update.Message != null)
-                _rootMessageHandler?.Handle(client, update.Message);
-            else _rootUpdateHandler?.Handle(client, update);
+            try
+            {
+                if (update.Type == UpdateType.Message && update.Message != null)
+                    _rootMessageHandler?.Handle(client, update.Message);
+                else _rootUpdateHandler?.Handle(client, update);
+            }
+            catch
+            {
+
+            }
+            
+        }
+
+        public static void HandleUpdateAsync(TelegramBotClient client, Update update)
+        {
+            Task.Factory.StartNew(() => HandleUpdate(client, update));
         }
 
         public static async Task<TelegramBotClient> Get()

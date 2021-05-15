@@ -15,7 +15,13 @@ namespace SSC.TelegramBotApp.Controllers
 
         public string About()
         {
-            return "SSC Bot Version 1.15";
+            var status = "Unknown";
+#if DEBUG
+            status = "Debug";
+#else
+            status = "release";
+#endif
+            return $"SSC Bot Version 1.15. Status: {status}";
         }
 
         

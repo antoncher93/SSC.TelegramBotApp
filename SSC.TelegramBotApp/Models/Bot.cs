@@ -73,14 +73,13 @@ namespace SSC.TelegramBotApp.Models
 
         private static void _ConfigureHandlers()
         {
-            _rootMessageHandler = new AdminMessageHandler();
+            _rootMessageHandler = new WelcomeNewChatMemberMessageHandler();
             _rootMessageHandler
+                .SetNext(new AdminMessageHandler())
                 .SetNext(new TestMessageHandler())
                 .SetNext(new WarnMessageHandler())
-                //.SetNext(new WarnUserMessageHandler())
                 .SetNext(new BanUserMessageHandler())
                 .SetNext(new UnbanMemberMessageHandler())
-                .SetNext(new WelcomeNewChatMemberMessageHandler())
                 .SetNext(new UpdateChatAgreementMessageHandler());
 
             _rootUpdateHandler = new AgreementAcceptUpdateHandler();

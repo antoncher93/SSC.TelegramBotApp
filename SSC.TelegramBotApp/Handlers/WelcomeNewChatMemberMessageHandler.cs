@@ -41,18 +41,17 @@ namespace SSC.TelegramBotApp.Handlers
                     parseMode: Telegram.Bot.Types.Enums.ParseMode.Markdown, 
                     replyMarkup: keyboard);
             }
-            else if(msg != null && msg.Text.IndexOf("/welcome")>=0)
+            else if(msg != null && msg.Text != null && msg.Text.IndexOf("/welcome")>=0)
             {
-                if(msg.Entities is null)
-                {
-                    client.SendTextMessageAsync(msg.Chat.Id, "Для выполнения команды необходимо указать пользователей чата.", replyToMessageId: msg.MessageId);
-                }
-                else
+                if (msg.Entities is null)
                 {
                     var mentions = "";
 
                     for (int i = 1; i < msg.Entities.Length; i++)
                     {
+                        if (msg.Entities[i].Type != Telegram.Bot.Types.Enums.MessageEntityType.Mention)
+                            continue;
+
                         var user = msg.Entities[i].User;
                         if(user == null)
                         {
@@ -63,6 +62,7 @@ namespace SSC.TelegramBotApp.Handlers
                                 var chatMember = client.GetChatMemberAsync(msg.Chat.Id, userInfo.TelegramId).Result;
                                 user = chatMember.User;
                             }
+                            else continue;
                         }
 
                         if (i> 0)
@@ -84,10 +84,32 @@ namespace SSC.TelegramBotApp.Handlers
                         parseMode: Telegram.Bot.Types.Enums.ParseMode.Markdown,
                         replyMarkup: keyboard);
                 }
-               
-            }
+                else if(msg.ReplyToMessage != null)
+                {
+                    var user = msg.ReplyToMessage.From;
 
-            base.Handle(client, msg);
+                    user.BanInChat(client, msg.Chat.Id);
+
+                    BotDbContext.Get().GetUserInfo(user);
+
+                    var button = new InlineKeyboardButton();
+                    button.Text = "Принять";
+                    button.CallbackData = Bot.ACCEPT_AGREEMENT_CALLBACK;
+
+                    var keyboard = new InlineKeyboardMarkup(button);
+                    string agreement = WebConfigurationManager.AppSettings.Get("MemberAgreement");
+                    client.SendTextMessageAsync(msg.Chat.Id, $"{user.GetMension()}\n{agreement}",
+                        parseMode: Telegram.Bot.Types.Enums.ParseMode.Markdown,
+                        replyMarkup: keyboard);
+                }
+                else
+                {
+                    client.SendTextMessageAsync(msg.Chat.Id, "Для выполнения команды необходимо указать пользователей чата.", replyToMessageId: msg.MessageId);
+                    return;
+                }
+            }
+            else
+                base.Handle(client, msg);
         }
     }
 }

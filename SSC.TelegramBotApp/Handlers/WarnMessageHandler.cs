@@ -26,6 +26,9 @@ namespace SSC.TelegramBotApp.Handlers
                     int index = 0;
                     foreach (var entity in msg.Entities)
                     {
+                        if (entity.Type != Telegram.Bot.Types.Enums.MessageEntityType.Mention)
+                            continue;
+
                         var user = entity.User;
                         if (user != null)
                             _WarnUser(client, msg, user, msg.MessageId);

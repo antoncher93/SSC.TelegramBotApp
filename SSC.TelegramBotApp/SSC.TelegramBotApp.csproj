@@ -144,25 +144,27 @@
   <ItemGroup>
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Commands\BanCommand.cs" />
+    <Compile Include="Commands\AdminCommand.cs" />
+    <Compile Include="Commands\MemberBotCommand.cs" />
+    <Compile Include="Commands\SetAgreementCommand.cs" />
+    <Compile Include="Commands\TestCommand.cs" />
+    <Compile Include="Commands\UnbanCommand.cs" />
+    <Compile Include="Commands\WarnCommand.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\MessageController.cs" />
-    <Compile Include="Extensions\BotDbContextExtension.cs" />
     <Compile Include="Extensions\UserExtensions.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Handlers\AdminMessageHandler.cs" />
     <Compile Include="Handlers\AgreementAcceptUpdateHandler.cs" />
+    <Compile Include="Handlers\ChatMemberAddedMessageHandler.cs" />
     <Compile Include="Handlers\MemberUnbannedUpdateHandler.cs" />
     <Compile Include="Handlers\MessageHandler.cs" />
-    <Compile Include="Handlers\UnbanMemberMessageHandler.cs" />
     <Compile Include="Handlers\UpdateHandler.cs" />
-    <Compile Include="Handlers\BanUserMessageHandler.cs" />
     <Compile Include="Handlers\ChatMemberBannedHandler.cs" />
-    <Compile Include="Handlers\TestMessageHandler.cs" />
-    <Compile Include="Handlers\UpdateChatAgreementMessageHandler.cs" />
-    <Compile Include="Handlers\WarnMessageHandler.cs" />
     <Compile Include="Handlers\WelcomeNewChatMemberMessageHandler.cs" />
+    <Compile Include="Models\Agreement.cs" />
     <Compile Include="Models\AppSettings.cs" />
     <Compile Include="Models\Bot.cs" />
     <Compile Include="Models\BotDbContext.cs" />

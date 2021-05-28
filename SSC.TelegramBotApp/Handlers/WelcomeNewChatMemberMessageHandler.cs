@@ -13,6 +13,7 @@ namespace SSC.TelegramBotApp.Handlers
 {
     public class WelcomeNewChatMemberMessageHandler : MessageHandler
     {
+        private readonly Action<TelegramBotClient, Chat, User, int, DateTime> _ban;
         public override void Handle(TelegramBotClient client, Message msg)
         {
             if(msg != null && msg.Type == Telegram.Bot.Types.Enums.MessageType.ChatMembersAdded)
@@ -26,7 +27,7 @@ namespace SSC.TelegramBotApp.Handlers
                         mentions += ", ";
                     else first = false;
 
-                    user.BanInChat(client, msg.Chat.Id);
+                    _ban?.Invoke(client, msg.Chat, user, 0, default);
 
                     BotDbContext.Get().GetUserInfo(user); // добавить информацию о юзере в базу
                 }
@@ -69,7 +70,7 @@ namespace SSC.TelegramBotApp.Handlers
                             mentions += ", ";
                         mentions += "[" + user.FirstName + "](tg://user?id=" + user.Id + ")";
 
-                        user.BanInChat(client, msg.Chat.Id);
+                        //user.BanInChat(client, msg.Chat.Id);
 
                         BotDbContext.Get().GetUserInfo(user); // добавить информацию о юзере в базу
                     }
@@ -88,7 +89,7 @@ namespace SSC.TelegramBotApp.Handlers
                 {
                     var user = msg.ReplyToMessage.From;
 
-                    user.BanInChat(client, msg.Chat.Id);
+                   // user.BanInChat(client, msg.Chat.Id);
 
                     BotDbContext.Get().GetUserInfo(user);
 

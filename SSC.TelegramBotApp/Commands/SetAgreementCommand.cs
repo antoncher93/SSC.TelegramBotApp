@@ -42,7 +42,7 @@ namespace SSC.TelegramBotApp.Commands
                 else
                 {
                     agreement.Text = text; //msg.Text;
-                    BotDbContext.Get().Entry(agreement).State = System.Data.Entity.EntityState.Added;
+                    BotDbContext.Get().Entry(agreement).State = System.Data.Entity.EntityState.Modified;
                     BotDbContext.Get().SaveChangesAsync();
                 }
 

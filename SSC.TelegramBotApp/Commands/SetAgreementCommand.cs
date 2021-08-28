@@ -15,8 +15,13 @@ namespace SSC.TelegramBotApp.Commands
 
         public override void Execute(TelegramBotClient client, Message msg)
         {
-            if (msg.ReplyToMessage is null)
-                return;
+            string text = string.Empty;
+
+            if (msg.ReplyToMessage != null)
+                text = msg.ReplyToMessage.Text;
+            else if(msg.Text.Contains("\n"))
+                text = msg.Text.Replace("/agreement\n", "");
+            else return;
 
             var member = client.GetChatMemberAsync(msg.Chat.Id, msg.From.Id).Result;
             if(member.Status == ChatMemberStatus.Administrator || member.Status == ChatMemberStatus.Creator)
@@ -26,7 +31,7 @@ namespace SSC.TelegramBotApp.Commands
                 {
                     agreement = new Agreement()
                     {
-                        Text = msg.ReplyToMessage.Text,
+                        Text = text,//msg.ReplyToMessage.Text,
                         ChatId = msg.Chat.Id
                     };
 
@@ -36,8 +41,8 @@ namespace SSC.TelegramBotApp.Commands
                 }
                 else
                 {
-                    agreement.Text = msg.Text;
-                    BotDbContext.Get().Entry(agreement).State = System.Data.Entity.EntityState.Added;
+                    agreement.Text = text; //msg.Text;
+                    BotDbContext.Get().Entry(agreement).State = System.Data.Entity.EntityState.Modified;
                     BotDbContext.Get().SaveChangesAsync();
                 }
 

@@ -11,6 +11,5 @@ namespace SSC.TelegramBotApp.Models
         public long UserId { get; set; }
         public long ChatId { get; set; }
         public int Warns { get; set; }
-        string UserName { get; set; }
     }
 }

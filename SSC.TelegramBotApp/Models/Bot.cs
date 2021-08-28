@@ -67,7 +67,7 @@ namespace SSC.TelegramBotApp.Models
                 }
                 else _rootUpdateHandler?.Handle(client, update);
             }
-            catch
+            catch(Exception exc)
             {
 
             }
